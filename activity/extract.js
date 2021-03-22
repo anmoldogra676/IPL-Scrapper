@@ -26,7 +26,7 @@ function cb(err, response, html)
     for (let i = 0; i < matchcard.length; i++) {
 
         let matchesLink = cheerioSelector(matchcard[i]).attr("href")
-        let fullmatchlink = "https://www.espncricinfo.com/" + matchesLink // url for getting every match scorecard    
+        let fullmatchlink = "https://www.espncricinfo.com/" + matchesLink // url for getting every match scorecard
         request(fullmatchlink, cb1);
     }
 }
@@ -40,7 +40,13 @@ function cb1(err, response, html)
 {
     // Teams Folder 
 
+
+
     let cheerioSelector = cheerio.load(html);
+    let globalElement = cheerioSelector(".match-info.match-info-MATCH .description").text()
+    let globalarr =globalElement.split(',')
+    let venue = globalarr[1];
+    let matchDate= globalarr[2]; 
     let element = cheerioSelector(".team .name-detail .name-link .name")
     let firstTeamname = cheerioSelector(element[0]).text()  // extracting the team names
     let secondTeamname = cheerioSelector(element[1]).text()
@@ -68,6 +74,7 @@ function cb1(err, response, html)
                 let Fours = cheerioSelector(teambatsmendata[5]).text();
                 let Sixes = cheerioSelector(teambatsmendata[6]).text();
                 let Strike_Rate = cheerioSelector(teambatsmendata[7]).text();
+                
                 // console.log(Playername, Runs, Balls)
                 let opponent_Team = whichTeam==1? secondTeamname:firstTeamname;
 
@@ -78,7 +85,9 @@ function cb1(err, response, html)
                     fours: Fours,
                     sixes: Sixes,
                     Strike_Rate: Strike_Rate,
-                    opponent_Team:opponent_Team
+                    opponent_Team:opponent_Team,
+                    venue_Name : venue,
+                    Match_date : matchDate
                 }
 
                 // here we make a file named playername.json and put that into team folder with (whichTeam counter we have taken)
