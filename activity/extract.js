@@ -69,6 +69,7 @@ function cb1(err, response, html)
                 let Sixes = cheerioSelector(teambatsmendata[6]).text();
                 let Strike_Rate = cheerioSelector(teambatsmendata[7]).text();
                 // console.log(Playername, Runs, Balls)
+                let opponent_Team = whichTeam==1? secondTeamname:firstTeamname;
 
                 let obj = {    // push all details in object 
                     name: Playername,
@@ -76,7 +77,8 @@ function cb1(err, response, html)
                     ball: Balls,
                     fours: Fours,
                     sixes: Sixes,
-                    Strike_Rate: Strike_Rate
+                    Strike_Rate: Strike_Rate,
+                    opponent_Team:opponent_Team
                 }
 
                 // here we make a file named playername.json and put that into team folder with (whichTeam counter we have taken)
